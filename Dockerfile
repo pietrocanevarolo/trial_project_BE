@@ -8,7 +8,7 @@ WORKDIR /app
 RUN apt-get update && \
     apt-get install -y postgresql-client libpq-dev postgresql-contrib
 
-COPY requirements.in /app/
+COPY /requirements.in /app/
 
 RUN pip install --upgrade pip && \
     pip install pip-tools
