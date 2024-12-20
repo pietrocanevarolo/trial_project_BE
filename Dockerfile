@@ -1,25 +1,20 @@
-FROM python:latest
+# Usa l'immagine ufficiale di Python come base
+FROM python:3.11-slim
 
-ENV PYTHONUNBUFFERED=1 \
-    PYTHONDONTWRITEBYTECODE=1
-
+# Imposta la directory di lavoro all'interno del container
 WORKDIR /app
 
-RUN apt-get update && \
-    apt-get install -y postgresql-client libpq-dev postgresql-contrib
-
+# Copia i file di dipendenze
 COPY /requirements.txt /app/
 
-RUN pip install --upgrade pip && \
-    pip install pip-tools
+# Installa le dipendenze
+RUN pip install --no-cache-dir -r requirements.txt
 
-RUN pip-compile requirements.in && \
-    pip install --no-cache-dir -r requirements.txt
+# Copia il resto del codice
+COPY / /app/
 
-COPY . /app/
+# Imposta la variabile d'ambiente per il database
+ENV PYTHONUNBUFFERED 1
 
-RUN python manage.py collectstatic --noinput
-
-EXPOSE 80
-
-CMD ["gunicorn", "myapp.wsgi:application", "--bind", "0.0.0.0:80"]
+# Comando per avviare il server Django
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
