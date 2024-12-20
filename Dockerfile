@@ -16,5 +16,7 @@ COPY / /app/
 # Imposta la variabile d'ambiente per il database
 ENV PYTHONUNBUFFERED 1
 
+EXPOSE 8000
+
 # Comando per avviare il server Django
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
