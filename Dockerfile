@@ -5,13 +5,13 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Copia i file di dipendenze
-COPY backend/requirements.txt /app/
+COPY /requirements.txt /app/
 
 # Installa le dipendenze
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copia il resto del codice
-COPY backend /app/
+COPY / /app/
 
 # Imposta la variabile d'ambiente per il database
 ENV PYTHONUNBUFFERED 1
